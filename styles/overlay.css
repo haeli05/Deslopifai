@@ -1,0 +1,365 @@
+/* Deslopifai Overlay Styles */
+
+/* Subtle highlight for flagged content */
+.deslopifai-flagged-subtle {
+  position: relative;
+  background: linear-gradient(90deg, rgba(255, 179, 71, 0.08) 0%, rgba(255, 179, 71, 0.05) 100%);
+  border-left: 3px solid rgba(255, 140, 0, 0.6);
+  padding-left: 8px;
+  margin-left: -11px;
+}
+
+/* Prominent highlight for flagged content */
+.deslopifai-flagged-prominent {
+  position: relative;
+  background: rgba(255, 140, 0, 0.15);
+  border: 1px solid rgba(255, 140, 0, 0.4);
+  border-radius: 4px;
+  padding: 8px;
+  margin: 4px 0;
+}
+
+/* Badge indicator */
+.deslopifai-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.deslopifai-badge:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Inline badge (non-absolute positioned) */
+.deslopifai-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin-left: 8px;
+  vertical-align: middle;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.deslopifai-badge-inline:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* User-marked as human */
+.deslopifai-user-human {
+  border-left-color: #4caf50 !important;
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.08) 0%, rgba(76, 175, 80, 0.03) 100%) !important;
+}
+
+.deslopifai-user-human .deslopifai-badge,
+.deslopifai-user-human .deslopifai-badge-inline {
+  background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+}
+
+/* User-marked as AI */
+.deslopifai-user-ai {
+  border-left-color: #f44336 !important;
+  background: linear-gradient(90deg, rgba(244, 67, 54, 0.08) 0%, rgba(244, 67, 54, 0.03) 100%) !important;
+}
+
+.deslopifai-user-ai .deslopifai-badge,
+.deslopifai-user-ai .deslopifai-badge-inline {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+}
+
+/* Tooltip container */
+.deslopifai-tooltip {
+  position: fixed;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 10001;
+  max-width: 320px;
+  min-width: 220px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.deslopifai-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.deslopifai-tooltip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.deslopifai-tooltip-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+}
+
+.deslopifai-tooltip-score {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.deslopifai-tooltip-score.low { color: #4caf50; }
+.deslopifai-tooltip-score.medium { color: #ff9800; }
+.deslopifai-tooltip-score.high { color: #f44336; }
+
+.deslopifai-tooltip-details {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 12px;
+}
+
+.deslopifai-tooltip-detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+}
+
+.deslopifai-tooltip-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.deslopifai-tooltip-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.deslopifai-tooltip-btn:hover {
+  transform: translateY(-1px);
+}
+
+.deslopifai-tooltip-btn:active {
+  transform: translateY(0);
+}
+
+.deslopifai-tooltip-btn-human {
+  background: #4caf50;
+  color: white;
+}
+
+.deslopifai-tooltip-btn-human:hover {
+  background: #43a047;
+}
+
+.deslopifai-tooltip-btn-ai {
+  background: #f44336;
+  color: white;
+}
+
+.deslopifai-tooltip-btn-ai:hover {
+  background: #e53935;
+}
+
+/* Confidence indicator */
+.deslopifai-confidence {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.deslopifai-confidence-low {
+  background: rgba(158, 158, 158, 0.2);
+  color: #9e9e9e;
+}
+
+.deslopifai-confidence-medium {
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+}
+
+.deslopifai-confidence-high {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+/* Score bar */
+.deslopifai-score-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.deslopifai-score-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.deslopifai-score-bar-fill.low { background: #4caf50; }
+.deslopifai-score-bar-fill.medium { background: #ff9800; }
+.deslopifai-score-bar-fill.high { background: #f44336; }
+
+/* Animation for new detections */
+@keyframes deslopifai-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 140, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+}
+
+.deslopifai-badge.pulse,
+.deslopifai-badge-inline.pulse {
+  animation: deslopifai-pulse 0.6s ease-out;
+}
+
+/* Disabled state */
+.deslopifai-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Hidden AI content */
+.deslopifai-hidden {
+  display: none !important;
+}
+
+/* Placeholder for hidden content */
+.deslopifai-hidden-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  background: linear-gradient(135deg, rgba(244, 67, 54, 0.08) 0%, rgba(244, 67, 54, 0.04) 100%);
+  border: 1px dashed rgba(244, 67, 54, 0.3);
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.deslopifai-hidden-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(244, 67, 54, 0.15);
+  border-radius: 50%;
+  color: #f44336;
+}
+
+.deslopifai-hidden-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.deslopifai-hidden-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d32f2f;
+}
+
+.deslopifai-hidden-score {
+  font-size: 12px;
+  color: #888;
+}
+
+.deslopifai-hidden-show {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.deslopifai-hidden-show:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #333;
+}
+
+/* Revealed content (was hidden, now shown) */
+.deslopifai-revealed {
+  position: relative;
+  background: linear-gradient(90deg, rgba(244, 67, 54, 0.06) 0%, rgba(244, 67, 54, 0.02) 100%);
+  border-left: 3px solid rgba(244, 67, 54, 0.5);
+  padding-left: 12px;
+  margin-left: -15px;
+}
+
+.deslopifai-badge-inline.revealed {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  margin-right: 8px;
+  margin-left: 0;
+}
+
+/* Dark mode adjustments (auto-detect) */
+@media (prefers-color-scheme: dark) {
+  .deslopifai-flagged-subtle {
+    background: linear-gradient(90deg, rgba(255, 179, 71, 0.1) 0%, rgba(255, 179, 71, 0.05) 100%);
+  }
+
+  .deslopifai-flagged-prominent {
+    background: rgba(255, 140, 0, 0.12);
+    border-color: rgba(255, 140, 0, 0.35);
+  }
+
+  .deslopifai-hidden-placeholder {
+    background: linear-gradient(135deg, rgba(244, 67, 54, 0.12) 0%, rgba(244, 67, 54, 0.06) 100%);
+  }
+
+  .deslopifai-hidden-show {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #aaa;
+  }
+
+  .deslopifai-hidden-show:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+}

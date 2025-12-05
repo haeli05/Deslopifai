@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deslopifai Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      color: white;
+    }
+
+    .header-text h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-text p {
+      font-size: 14px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .section {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title .icon {
+      width: 20px;
+      height: 20px;
+      fill: #ff8c00;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+
+    .setting-info h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .setting-info p {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      background: #333;
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle.active {
+      background: #ff8c00;
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle.active .toggle-knob {
+      transform: translateX(22px);
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .slider {
+      width: 200px;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #333;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-value {
+      min-width: 40px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ff8c00;
+    }
+
+    select {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    select:focus {
+      box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.3);
+    }
+
+    .list-section {
+      margin-top: 16px;
+    }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .list-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #aaa;
+    }
+
+    .list-container {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    .list-item-text {
+      font-size: 13px;
+      color: #e0e0e0;
+    }
+
+    .list-item-remove {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .list-item-remove:hover {
+      color: #f44336;
+      background: rgba(244, 67, 54, 0.1);
+    }
+
+    .list-empty {
+      padding: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .add-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .add-input {
+      flex: 1;
+      background: #333;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .add-input::placeholder {
+      color: #666;
+    }
+
+    .add-input:focus {
+      box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.3);
+    }
+
+    .add-btn {
+      background: linear-gradient(135deg, #ff8c00 0%, #ff6b00 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .add-btn:active {
+      transform: translateY(0);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-value.highlight {
+      color: #ff8c00;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .export-section {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .export-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      color: #aaa;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .export-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .premium-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      text-transform: uppercase;
+    }
+
+    .premium-feature {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success {
+      background: #4caf50;
+    }
+
+    .toast.error {
+      background: #f44336;
+    }
+
+    .hidden-input {
+      position: absolute;
+      left: -9999px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">D</div>
+      <div class="header-text">
+        <h1>Deslopifai Settings</h1>
+        <p>Configure AI content detection preferences</p>
+      </div>
+    </div>
+
+    <!-- General Settings -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        General
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>Enable Detection</h3>
+          <p>Turn AI content detection on or off globally</p>
+        </div>
+        <div class="toggle active" id="enabledToggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>Show Badge</h3>
+          <p>Display badge on flagged content</p>
+        </div>
+        <div class="toggle active" id="showBadgeToggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>Sensitivity</h3>
+          <p>How aggressive detection should be</p>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="slider" id="sensitivitySlider" min="0" max="100" value="50">
+          <span class="slider-value" id="sensitivityValue">50</span>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>Highlight Style</h3>
+          <p>How flagged content is displayed</p>
+        </div>
+        <select id="highlightStyleSelect">
+          <option value="hidden">Hidden (Default)</option>
+          <option value="subtle">Subtle Highlight</option>
+          <option value="prominent">Prominent Highlight</option>
+          <option value="badge-only">Badge Only</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Domain Lists -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        Domain Lists
+      </div>
+
+      <div class="list-section">
+        <div class="list-header">
+          <span class="list-title">Trusted Domains (Skip Detection)</span>
+        </div>
+        <div class="list-container" id="trustedList"></div>
+        <div class="add-input-row">
+          <input type="text" class="add-input" id="trustedInput" placeholder="example.com">
+          <button class="add-btn" id="addTrustedBtn">Add</button>
+        </div>
+      </div>
+
+      <div class="list-section" style="margin-top: 24px;">
+        <div class="list-header">
+          <span class="list-title">Blocked Domains (Auto-Flag)</span>
+        </div>
+        <div class="list-container" id="blockedList"></div>
+        <div class="add-input-row">
+          <input type="text" class="add-input" id="blockedInput" placeholder="spam-site.com">
+          <button class="add-btn" id="addBlockedBtn">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+        Statistics
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Total Scanned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value highlight" id="statFlagged">0</div>
+          <div class="stat-label">Flagged</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statHuman">0</div>
+          <div class="stat-label">Marked Human</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statAI">0</div>
+          <div class="stat-label">Marked AI</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Import/Export -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        Data Management
+      </div>
+
+      <div class="export-section">
+        <button class="export-btn" id="exportBtn">Export Settings</button>
+        <button class="export-btn" id="importBtn">Import Settings</button>
+        <button class="export-btn" id="resetBtn">Reset All</button>
+      </div>
+      <input type="file" class="hidden-input" id="importFile" accept=".json">
+    </div>
+
+    <!-- Premium Features (Stubs) -->
+    <div class="section premium-feature">
+      <div class="section-title">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        Premium Features
+        <span class="premium-badge">Coming Soon</span>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>LLM Verification</h3>
+          <p>Use AI to verify ambiguous detection results</p>
+        </div>
+        <div class="toggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>Community Lists</h3>
+          <p>Sync with crowd-sourced domain lists</p>
+        </div>
+        <div class="toggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <h3>Custom Phrase Lists</h3>
+          <p>Add your own AI indicator phrases</p>
+        </div>
+        <div class="toggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="src/options.js"></script>
+</body>
+</html>
