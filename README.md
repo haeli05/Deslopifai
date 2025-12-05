@@ -1,0 +1,2 @@
+# Deslopifai
+Remove AI Slop
