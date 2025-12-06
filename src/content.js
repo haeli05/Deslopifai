@@ -246,7 +246,7 @@
   ];
 
   const MIN_WORD_COUNT = 50;
-  const SCORE_THRESHOLD = 35;
+  const SCORE_THRESHOLD = 20;
 
   let settings = null;
   let processedElements = new WeakSet();
@@ -428,45 +428,22 @@
 
     // Apply display style based on settings
     if (settings.highlightStyle === 'hidden') {
-      // Hide the AI content completely
-      element.classList.add('deslopifai-hidden');
+      // Store original content for potential restore
+      element.dataset.deslopifaiOriginal = element.innerHTML;
 
-      // Create a placeholder that can be clicked to reveal
-      const placeholder = document.createElement('div');
-      placeholder.className = 'deslopifai-hidden-placeholder';
-      placeholder.innerHTML = `
-        <div class="deslopifai-hidden-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-            <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2"/>
-          </svg>
+      // Replace content entirely with "Desloppified" message
+      element.innerHTML = `
+        <div class="deslopifai-desloppified">
+          <span class="deslopifai-desloppified-text">Desloppified</span>
+          <button class="deslopifai-desloppified-show">Show Original (${result.score}% AI)</button>
         </div>
-        <div class="deslopifai-hidden-text">
-          <span class="deslopifai-hidden-title">AI Content Hidden</span>
-          <span class="deslopifai-hidden-score">Score: ${result.score}%</span>
-        </div>
-        <button class="deslopifai-hidden-show">Show</button>
       `;
 
-      placeholder.querySelector('.deslopifai-hidden-show').addEventListener('click', (e) => {
+      element.querySelector('.deslopifai-desloppified-show').addEventListener('click', (e) => {
         e.stopPropagation();
-        element.classList.remove('deslopifai-hidden');
+        element.innerHTML = element.dataset.deslopifaiOriginal;
         element.classList.add('deslopifai-revealed');
-        placeholder.remove();
-
-        // Add a small indicator that this was AI content
-        const revealBadge = document.createElement('span');
-        revealBadge.className = 'deslopifai-badge-inline revealed';
-        revealBadge.textContent = `AI ${result.score}%`;
-        revealBadge.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const tooltip = createTooltip(element, result, contentHash);
-          positionTooltip(tooltip, revealBadge);
-        });
-        element.insertBefore(revealBadge, element.firstChild);
       });
-
-      element.parentNode.insertBefore(placeholder, element);
     } else if (settings.highlightStyle !== 'badge-only') {
       element.classList.add(`deslopifai-flagged-${settings.highlightStyle}`);
     }
